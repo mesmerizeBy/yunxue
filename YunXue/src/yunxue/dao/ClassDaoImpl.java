@@ -1,0 +1,38 @@
+package yunxue.dao;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+
+import jdbc.util.jdbcUtil;
+import yunxue.mo.ClassResume;
+
+public class ClassDaoImpl implements ClassDao{
+	
+	@SuppressWarnings("unchecked")
+	public List<ClassResume> getStuFinishClass(int stuNo)throws SQLException{
+		List<ClassResume> classmo=new ArrayList<ClassResume>();
+		QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+		String sql="select * from class_resume where stuNo="+stuNo+" and courseState2='"+2+"'";
+		classmo=(List<ClassResume>) qr.query(sql,new BeanListHandler(ClassResume.class));
+		return classmo;
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<ClassResume> getStuTimetable(int stuNo)throws SQLException{
+		List<ClassResume> classmo=new ArrayList<ClassResume>();
+		QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+		String sql="select * from class_resume where"
+		         +" (DateDiff(dd,CONVERT(varchar(20),classDate,110),CONVERT(varchar(20),GETDATE(),110))<=7)"
+		         +" and stuNo="+stuNo+" and courseState2='"+1+"'";
+		classmo=(List<ClassResume>) qr.query(sql,new BeanListHandler(ClassResume.class));
+		return classmo;
+	}
+	
+
+}

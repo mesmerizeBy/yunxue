@@ -1,0 +1,14 @@
+package yunxue.dao;
+
+import java.sql.SQLException;
+
+import yunxue.mo.StudentMo;
+import yunxue.mo.TidentityMo;
+
+public interface PersonalinfoDao {
+	
+	public boolean updatePersonal(StudentMo stu) throws SQLException;
+	
+	public boolean updateTeacher(TidentityMo tea) throws SQLException;
+
+}

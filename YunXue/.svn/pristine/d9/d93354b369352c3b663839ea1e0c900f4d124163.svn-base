@@ -1,0 +1,48 @@
+package yunxue.dao;
+
+import org.apache.commons.dbutils.QueryRunner;
+import java.sql.SQLException;
+import jdbc.util.jdbcUtil;
+import yunxue.mo.StudentMo;
+import yunxue.mo.TidentityMo;
+
+public class PersonalinfoDaoImpl implements PersonalinfoDao{
+	
+	public boolean updatePersonal(StudentMo stu) throws SQLException{
+		boolean flag=false;
+		String sql="update studentT set stuName="+stu.getStuName()
+		+", stuImg="+stu.getStuImg()+", stuSex="+stu.getStuSex()
+		+", stuBirth="+stu.getStuBirth()+", stuStage="+stu.getStuStage()
+		+", stuSchool="+stu.getStuSchool()+" where stuNo="+stu.getStuNo();
+		QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+		int rtn=qr.update(sql);
+		if(rtn==1){
+			flag=true;
+		}
+		else{
+			flag=false;
+		}
+		return flag;
+	}
+	
+	
+	public boolean updateTeacher(TidentityMo tea) throws SQLException{
+		boolean flag=false;
+		String sql="update tIdentify set teacherNo=?,tName=?,tAge=?,tArea=?,tSchool=?,tIdcard=?"
+		        +",tIdcardImg=?,tStudentcardImg=?,tPicture=?,tExperience=?,tSex=?,tDescription=?"
+				+",tMajor=?,tEducation=?";
+		QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+		Object[] params={tea.getTeacherNo(),tea.gettName(),tea.gettAge(),tea.gettArea(),tea.gettSchool(),
+				         tea.gettIdcard(),tea.gettIdcardImg(),tea.gettStudentcardImg(),tea.gettPicture(),
+				         tea.gettExperience(),tea.gettSex(),tea.gettDescription(),tea.gettMajor(),tea.gettEducation()};
+		int rtn=qr.update(sql,params);
+		if(rtn==1){
+			flag=true;
+		}
+		else{
+			flag=false;
+		}
+		return flag;
+	}
+
+}

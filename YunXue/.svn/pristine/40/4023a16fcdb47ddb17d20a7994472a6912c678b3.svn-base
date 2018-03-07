@@ -1,0 +1,167 @@
+package yunxue.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import yunxue.dao.TeacherDao;
+import yunxue.mo.TeacherMo;
+import jdbc.util.jdbcUtil;
+
+
+public class TeacherDaoImpl implements TeacherDao {
+
+	public List<TeacherMo> getBasicTeachersInfo(int pageCount, int pageSize) throws Exception{
+		
+		List<TeacherMo> teacherlist=new ArrayList<TeacherMo>();
+		
+		if (pageCount < 1 || pageSize < 1) {
+			return null;
+		}
+		
+		String sql="select top " + pageSize + " teacherNo,tPicture,tName,tSex,tSchool,teacherSatisfaction"
+				+ ",teacherClasses,tEducation" + " from teacher_info" + " where teacherNo not in"
+				+ " (select top " + (pageCount - 1) * pageSize + " teacherNo from teacher_info)";
+		
+		Connection conn = null;
+		Statement st=null;
+		ResultSet rs = null;
+		try{
+			conn = jdbcUtil.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+				TeacherMo teacherForm=new TeacherMo();
+				teacherForm.setTeacherNo(rs.getInt(1));
+				teacherForm.settPicture(rs.getString(2));
+				teacherForm.settName(rs.getString(3));
+				teacherForm.settSex(rs.getString(4));
+				teacherForm.settSchool(rs.getString(5));
+				teacherForm.setTeacherSatisfaction(rs.getString(6));
+				teacherForm.setTeacherClasses(rs.getString(7));
+				teacherForm.settEducation(rs.getString(8));
+				teacherlist.add(teacherForm);
+			}   
+		 return teacherlist;
+		 
+		}finally{
+			jdbcUtil.closeResultSet(rs);
+			jdbcUtil.closeStatement(st);
+			jdbcUtil.closeConnection(conn);
+		}
+	}
+	
+	public int getTeacherCount() throws Exception{
+		int teacherNum=0;
+		Connection conn=null;
+		Statement st=null;
+		ResultSet rs=null;
+		String sql="select count(*) from teacher_info ";
+		try{
+			conn = jdbcUtil.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			if (rs != null && rs.next()) {
+				teacherNum = rs.getInt(1);
+			}
+			return teacherNum;
+		}finally{
+			jdbcUtil.closeResultSet(rs);
+			jdbcUtil.closeStatement(st);
+			jdbcUtil.closeConnection(conn);
+		}
+	}
+	
+	public List<TeacherMo> getTeacher()  throws Exception{
+		List<TeacherMo> teacherlist=new ArrayList<TeacherMo>();
+		Connection conn = null;
+		Statement st=null;
+		ResultSet rs = null;
+		try{
+			String sql="select top 4 teacherNo,tPicture,tName,tSchool,teacherClasses"+" from teacher_info"
+		    +" order by NEWID()";
+		    conn=jdbcUtil.getConnection();
+		    st=conn.createStatement();
+		    rs=st.executeQuery(sql);
+		    if(rs!=null){
+		    	while(rs.next()){
+		    		TeacherMo teachermo=new TeacherMo();
+		    		teachermo.setTeacherNo(rs.getInt(1));
+		    		teachermo.settPicture(rs.getString(2));
+		    		teachermo.settName(rs.getString(3));
+		    		teachermo.settSchool(rs.getString(4));
+		    		teachermo.setTeacherClasses(rs.getString(5));
+		    		teacherlist.add(teachermo);
+		    	}
+		    }
+			return teacherlist;
+	   }finally{
+		    jdbcUtil.closeResultSet(rs);
+			jdbcUtil.closeStatement(st);
+			jdbcUtil.closeConnection(conn);
+	   }
+	}
+	
+	
+	
+	public List<TeacherMo> getBasicTeachersInfo(int pageCount, int pageSize, String name) throws Exception{
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		List<TeacherMo> teacherlist=new ArrayList<TeacherMo>();
+		
+		String sql="select top " + pageSize + " teacherNo,tPicture,tName,tSex,tSchool,teacherSatisfaction"
+				+ ",teacherClasses,tEducation" + " from teacher_info" + " where tName like "+"'%"+name+"%'"
+				+" and teacherNo not in"
+				+ " (select top " + (pageCount-1) * pageSize + " teacherNo from teacher_info)";
+		try{
+			conn=jdbcUtil.getConnection();
+			st=conn.createStatement();
+			rs=st.executeQuery(sql);
+			while (rs.next()) {
+				TeacherMo teachermo=new TeacherMo();
+				teachermo.setTeacherNo(rs.getInt(1));
+				teachermo.settPicture(rs.getString(2));
+				teachermo.settName(rs.getString(3));
+				teachermo.settSex(rs.getString(4));
+				teachermo.settSchool(rs.getString(5));
+				teachermo.setTeacherSatisfaction(rs.getString(6));
+				teachermo.setTeacherClasses(rs.getString(7));
+				teachermo.settEducation(rs.getString(8));
+				teacherlist.add(teachermo);
+			}   
+			return teacherlist;	
+		}finally{
+			jdbcUtil.closeResultSet(rs);
+			jdbcUtil.closeStatement(st);
+			jdbcUtil.closeConnection(conn);
+		}
+
+	}
+	
+	
+	//姓名查询下的教师人数
+	public int getTeacherNameCount(String name)  throws Exception{
+		int teacherNum=0;
+		Connection conn=null;
+		Statement st=null;
+		ResultSet rs=null;
+		String sql="select count(*) from teacher_info "
+				+" where tName like '%"+name+"%'";
+		try{
+			conn = jdbcUtil.getConnection();
+			st = conn.createStatement();
+			rs = st.executeQuery(sql);
+			if (rs != null && rs.next()) {
+				teacherNum = rs.getInt(1);
+			}
+			return teacherNum;
+		}finally{
+			jdbcUtil.closeResultSet(rs);
+			jdbcUtil.closeStatement(st);
+			jdbcUtil.closeConnection(conn);
+		}
+	}
+}

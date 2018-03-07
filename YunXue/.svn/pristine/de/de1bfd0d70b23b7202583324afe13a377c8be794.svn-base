@@ -1,0 +1,55 @@
+package yunxue.action;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Tidentity2
+ */
+@WebServlet("/Tidentity2.do")
+public class Tidentity2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Tidentity2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String teacherno=request.getParameter("teacherNo");
+		String []stage=request.getParameterValues("stage");
+		String []subject=request.getParameterValues("subject");
+		String []time=request.getParameterValues("time");
+		String teacherClasses=null;
+		String teacherStage=null;
+		String intervalNo=null;
+		for(int i=0;i<subject.length;i++){
+			teacherClasses+=subject[i]+",";
+		}
+		for(int i=0;i<stage.length;i++){
+			teacherStage+=stage[i]+",";
+		}
+		for(int i=0;i<time.length;i++){
+			intervalNo+=time[i]+",";
+		}
+	}
+
+}

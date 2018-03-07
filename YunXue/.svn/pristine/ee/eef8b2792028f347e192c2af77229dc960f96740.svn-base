@@ -1,0 +1,35 @@
+package yunxue.dao;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import jdbc.util.jdbcUtil;
+import yunxue.mo.ClassIntervalMo;
+
+public class ClassIntervalDaoImpl {
+	
+	@SuppressWarnings("unchecked")
+	public List<ClassIntervalMo> classIntervalNo() throws SQLException{
+		List<ClassIntervalMo> intervalno=new ArrayList<ClassIntervalMo>();
+     	QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+        String sql = "select intervalNo from ClassInterval";
+        intervalno = (List<ClassIntervalMo>) qr.query(sql, new ColumnListHandler());
+	    return intervalno;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<ClassIntervalMo> intervalDateTime(int intervalNo) throws SQLException{
+		List<ClassIntervalMo> interval=new ArrayList<ClassIntervalMo>();
+		QueryRunner qr = new QueryRunner(jdbcUtil.getDataSource());
+		String sql="select intervalDate,intervalTime from ClassInterval where intervalNo="+intervalNo;
+		interval=(List<ClassIntervalMo>) qr.query(sql,new BeanHandler(ClassIntervalMo.class));
+		return interval;
+	}
+	
+}

@@ -1,0 +1,153 @@
+package yunxue.action;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+
+import yunxue.dao.StuUserOp;
+import yunxue.dao.TeaUserOp;
+import yunxue.dao.UserDao;
+import yunxue.listener.LoginListener;
+import yunxue.mo.StuUser;
+import yunxue.mo.TeaUser;
+import yunxue.mo.UserMo;
+
+
+/**
+ * Servlet implementation class LoginUserServlet
+ */
+@WebServlet("/Login.do")
+public class LoginUserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginUserServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8"); 
+		response.setCharacterEncoding("utf-8"); 
+		response.setContentType("text/html;charset=UTF-8");
+		String usePho = request.getParameter("uesrPhone");
+		String usePwd = request.getParameter("passWord");
+		UserMo user = new UserMo();//继承
+		user.setUserPhone(usePho);
+		user.setUserPwd(usePwd);
+		UserDao stu = new StuUserOp();
+		UserDao tea = new TeaUserOp();
+		
+		int flag = 0;
+		
+		try {
+			flag = stu.querryUser(user);//查询学生
+		} catch (SQLException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
+		if(flag ==1) {
+			//为学生
+			stuLogin(stu, user, request, response);
+			return;
+		}
+		flag = 0;
+		try {
+			flag = tea.querryUser(user);
+		} catch (SQLException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
+		if(flag == 1){
+			//为教师
+			teaLogin(tea, user, request, response);
+			return;
+		}else {
+			//数据包中不存在该号码，flag==2
+			request.setAttribute("loginmes", "lost2");
+			request.getRequestDispatcher("/font/user_login.jsp").forward(request, response);
+		}
+    }
+	
+	public void stuLogin(UserDao stu, UserMo user, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		//为学生
+		int flag1 = 0;
+		try {
+			flag1 = stu.checkUser(user);
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		if(flag1 == 1) {
+			//验证通过
+			UserMo uMo = new StuUser();
+			try {
+				uMo = stu.getUser(user);
+			} catch (Exception e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		
+			HttpSession session =request.getSession();
+			session.setAttribute("stuloginer",uMo);
+			response.sendRedirect(request.getContextPath()+"/font/index.jsp");
+		}else {
+			//验证不通过,flag1为2
+			request.setAttribute("loginmes", "lost1");
+			request.getRequestDispatcher("/font/user_login.jsp").forward(request, response);
+		}
+	}
+	
+	public void teaLogin(UserDao tea, UserMo user, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		//为教师
+		int flag1 = 0;
+		try {
+			flag1 = tea.checkUser(user);
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		if(flag1 == 1) {
+			//验证通过
+			UserMo uMo = new TeaUser();
+			try {
+				uMo = tea.getUser(user);
+			} catch (Exception e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+			HttpSession session =request.getSession();
+			session.setAttribute("tealoginer",uMo);
+			
+			response.sendRedirect(request.getContextPath()+"/font/index.jsp");
+		}else {
+			//验证不通过,flag1为2
+			request.setAttribute("loginmes", "lost1");
+			request.getRequestDispatcher("/font/user_login.jsp").forward(request, response);
+		}
+	}
+}

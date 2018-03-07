@@ -1,0 +1,15 @@
+package yunxue.dao;
+
+import java.util.List;
+import yunxue.mo.TeacherMo;
+
+public interface TeacherDao {
+
+	public List<TeacherMo> getBasicTeachersInfo(int pageCount, int pageSize) throws Exception;//基本教师信息
+	//public List<TeacherMo> getDetailTeachersInfo() throws Exception;//详细教师信息
+	public int getTeacherCount()  throws Exception;
+	public List<TeacherMo> getTeacher()  throws Exception;
+	public List<TeacherMo> getBasicTeachersInfo(int pageCount, int pageSize, String name) throws Exception;
+	public int getTeacherNameCount(String name)  throws Exception;
+	
+}

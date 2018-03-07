@@ -1,0 +1,11 @@
+ 	<c3p0-config>
+
+	  <default-config>
+		<property name="driverClass">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="user">sa</property>
+		<property name="password"></property>
+		<property name="jdbcUrl">jdbc:sqlserver://127.0.0.1:1433;DatabaseName=YunXue</property>
+	    <property name="maxPoolSize">30</property>
+	</default-config>
+
+	</c3p0-config>

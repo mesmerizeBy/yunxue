@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin: 0; padding: 0; font-family: '微软雅黑';}
+a:link{text-decoration: none;}
+ul{list-style: none}
+.clear:after{content:""; display:table; height:0; visibility:both; clear:both;}
+.clearfix{zoom:1;}
+/*也能用于父标签对子元素浮动的影响 ul/li*/
+.in-line{width:100%; margin: 0 auto; height: 0.9px; background:#B3AFAF; margin-top: 14px;}
+
+/*body*/
+.container{width:1300px; margin: 0 auto; }
+.nav-line{font-size: 14px; height:50px; line-height: 50px;}
+.nav-line a{font-size: 16px; color:gray;}
+.wrap{width: 100%; min-width: 1300px; background-color:#f6f7fb; border-top: 1px solid #DCDCDC;}
+
+/*tmessage-box-top*/
+.teacher-message-box{width:880px; height:800px; float:left; border-right: 1px solid #DCDCDC; float: left; }
+.message-box-top{ width: 880px; height:340px; }
+.teacher-point{ width:460px; height:300px; padding: 10px; position: relative; border-right: 1px solid #DCDCDC; font-size: 15px; float: left;}
+.teacher-image{height:100px; float:left;}
+.teacher-image .mask{position:absolute; top:10px; left:10px;}
+.teacher-name-info{height:100px; float:left; padding-left: 18px}
+.teacher-name-info p.a{font-size: 28px; font-weight:500; padding-left:8px;}
+.teacher-name-info p.b{font-size: 17px; padding-left: 8px; color:gray;}
+.teacher-name-info p.b span{color:black;}
+.teacher-name-info ul{padding: 10px 0px 10px 0px;}
+.teacher-name-info ul li{font-size: 15px; color:gray; float: left;padding:0px 8px;}
+.teacher-name-info ul li span{color:black;}
+.teacher-name-info ul li.a{border-right:0px;}
+.teacher-certify{padding: 100px 0px 50px 0px;  }
+.teacher-certify dl dt{float:left; width:190px; height: 35px; border-right: 1px solid #B3B3B3; vertical-align:middle; position: relative; padding: 0px 10px; color:gray;}
+.teacher-certify dl dd{float:left; width:220px; height: 35px; vertical-align:middle; position: relative; padding: 0px 10px; color:gray;}
+.teacher-certify dl img{padding:0px 10px 0px 10px; vertical-align:middle;}
+.teacher-certify dl dt p{padding-left: 15px;font-size:35px; position: absolute; left:115px;bottom: -3px; font-family:Impact; color:#9E8A03;}
+.teacher-certify dl dd p{padding-left: 15px;font-size:30px; position: absolute; left:130px;bottom: 3px; font-family:"幼圆"; color:#9E8A03; font-weight: bolder;}
+.class-style{padding: 20px 0px 0px 10px;}
+.class-style h3{font-size: 30px; color: #858E93; font-weight: 500;} 
+.class-style ul{font-size:17px; color:#666; padding: 15px 0 0 35px; line-height: 30px;}
+.class-style ul li{padding: 5px 15px; float: left}
+.teacher-profile{width:349px; padding: 10px 25px 0px 25px; float: right;}
+.teacher-profile h3{font-size: 30px; color:#9A9A9A; font-weight: 500;}
+.teacher-profile p{padding-top: 8px; line-height: 30px;}
+
+/*teacher-expe-box*/
+.teacher-expe-box{padding: 60px 5px 0px 10px;}
+.teacher-expe-box>p{font-size: 30px; color: #858E93; font-weight: 500;}
+.teacher-expe-box ul{position: relative;}
+.teacher-expe-box ul li{height: 150px; padding: 30px 0px 10px 0px; border-bottom: 1px solid #B3B3B3; position: absolute}
+/*absolue,脱离标准刘*/
+.teacher-expe-box ul li dl dd{font-size: 25px; color:red;} 
+.teacher-expe-box ul li dl dt{padding-top: 25px;}
+
+/*message-box-bottom*/
+.message-box-bottom{ width:880px; padding-bottom: 100px;}
+
+/*teacher-message-right*/
+.teacher-message-right{float:right; padding:10px; width:390px;}
+.class-code{height: 330px; text-align: center;}
+.class-tab{height: 330px;}
+.class-tab h3{font-weight:600; padding:35px 0 0 0px; color:#D04346; letter-spacing: 3px; text-align: center}
+.class-img{height: 25px; padding: 15px 0 10px 0px; }
+.class-img dl{float:left; padding-left: 15px; font-size: 14px;}
+.class-img dl:first-child{padding-left: 0px;}
+.class-img dd,dt{float: left; padding-left: 5px;}
+.tab-box {height:200px;}
+.tab-box table{border-spacing: 1px; background-color: #BBBBBB; border-radius: 8px;}
+.tab-box table th{background: #D7D7D7; padding: 5px 9px;text-align: center }
+.tab-box table td{background: white; text-align: center;}
+.tab-box table td img{height: 30px; vertical-align:-2px}
+.tab-box table td:first-child{width:50px; padding: 5px 2px; text-align: center}
+
+
+
+
+
+
+
